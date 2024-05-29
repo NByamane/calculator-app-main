@@ -1,26 +1,26 @@
-export const calculate = (button: string, state: State): State => {
+export const calculate = (buttonValue: string, state: State): State => {
 	//数値ボタンを押した時
-	if(isNumberButton(button)) {
-		return handleNumberButton(button, state);
+	if(isNumberButton(buttonValue)) {
+		return updateCurrent(buttonValue, state);
 	}
 	//オペレーターボタンを押した時
-	if(isOperatorButton(button)) {
-		return handleOperationButton(button, state);
+	if(isOperatorButton(buttonValue)) {
+		return handleOperationButton(buttonValue, state);
 	}
 	//.ボタンを押した時
-	if(isDotButton(button)) {
+	if(isDotButton(buttonValue)) {
 		return handleDotButton(state); //buttonの種類は必要ないのでstateだけ
 	}
 	//DELボタンを押した時
-	if(isDelButton(button)) {
+	if(isDelButton(buttonValue)) {
 		return handleDelButton(state);
 	}
 	//RESETボタンを押した時
-	if(isResetButton(button)) {
+	if(isResetButton(buttonValue)) {
 		return handleResetButton();
 	}
 	//=ボタンを押した時
-	if(isEquallButton(button)) {
+	if(isEquallButton(buttonValue)) {
 		return handleEquallButton(state);
 	}
 	
@@ -30,68 +30,49 @@ export const calculate = (button: string, state: State): State => {
 //型宣言
 export interface State {
 	current: string;
-	operand: number;
+	operand: number | string;
 	operator: string | null;
 	isNextClear: Boolean;
 }
 
 //数値ボタン
-function isNumberButton(button: string) { //押した数値ボタンが何の可能性があるか
-	return (
-		button === '0' ||
-		button === '1' ||
-		button === '2' ||
-		button === '3' ||
-		button === '4' ||
-		button === '5' ||
-		button === '6' ||
-		button === '7' ||
-		button === '8' ||
-		button === '9'
-	)
+function isNumberButton(buttonValue: string): boolean { //押した数値ボタンが何の可能性があるか
+	const regex = /^[0-9]$/;
+	// 文字列buttonが1文字で、0~9のいずれかの数値であればtrueを返す
+	return buttonValue.length === 1 && regex.test(buttonValue);
 }
 
-function handleNumberButton(button: string, state: State): State {
-	if(state.isNextClear === true) { //+-x/ボタンが押された場合は表示を消去しないといけないので
-		return {
-			current: button,
-			operand: state.operand,
-			operator: state.operator,
-			isNextClear: false,
-		}
+function updateCurrent(buttonValue: string, state: State): State {
+	// 現在の表示が（,を除く）14桁以上ならボタンを無視
+	if (state.current.replace(/,/g, '').length >= 14) {
+		return state;
 	}
-	if(state.current === '0') { //押したボタンが0だったら
-		return {
-			current: button,
-			operand: state.operand,
-			operator: state.operator,
-			isNextClear: false,
-		};
-	}
-	return { //0以外を押してたら
-		current: state.current + button,
-		operand: state.operand,
-		operator: state.operator,
+
+	const currentValue = (state.isNextClear === true || state.current === '0')
+		? buttonValue : (state.current.length < 13 ? state.current + buttonValue : state.current);
+	return {
+		...state,
+    current: currentValue,
 		isNextClear: false,
 	};
 }
 
 //演算子ボタン
-function isOperatorButton(button: string) { //押したオペレーションボタンが何の可能性があるか
+function isOperatorButton(buttonValue: string) { //押したオペレーションボタンが何の可能性があるか
 	return(
-		button === '+' ||
-		button === '-' ||
-		button === 'x' ||
-		button === '/'
+		buttonValue === '+' ||
+		buttonValue === '-' ||
+		buttonValue === 'x' ||
+		buttonValue === '/'
 	)
 }
 
-function handleOperationButton(button: string, state: State): State {
-	if(state.operator === null) { //operationボタン（+-x/）が押されていない場合（sate値に変化がない場合）
+function handleOperationButton(buttonValue: string, state: State): State {
+	if(state.operator === null) { //operationボタン（+-x/）が押されていない場合（state値に変化がない場合）
 		return {
 			current: state.current,
 			operand: parseFloat(state.current),
-			operator: button,
+			operator: buttonValue,
 			isNextClear: true,
 		}
 	}
@@ -99,14 +80,14 @@ function handleOperationButton(button: string, state: State): State {
 	return {
 		current: `${nextValue}`,
 		operand: nextValue,
-		operator: button,
+		operator: buttonValue,
 		isNextClear: true,
 	}
 }
 
 //小数点ボタン
-function isDotButton(button: string) {
-	return button === '.';
+function isDotButton(buttonValue: string) {
+	return buttonValue === '.';
 }
 
 function handleDotButton(state: State): State {
@@ -123,8 +104,8 @@ function handleDotButton(state: State): State {
 }
 
 //DELボタン
-function isDelButton(button: string) {
-	return button === 'DEL';
+function isDelButton(buttonValue: string) {
+	return buttonValue === 'DEL';
 }
 
 function handleDelButton(state: State): State { //削除ボタンは、すでに1文字しかない場合は0に戻す
@@ -145,8 +126,8 @@ function handleDelButton(state: State): State { //削除ボタンは、すでに
 }
 
 //RESETボタン
-function isResetButton(button: string) {
-	return button === 'RESET';
+function isResetButton(buttonValue: string) {
+	return buttonValue === 'RESET';
 }
 
 function handleResetButton(): State {
@@ -159,8 +140,8 @@ function handleResetButton(): State {
 }
 
 //=ボタン
-function isEquallButton(button: string) {
-	return button === '=';
+function isEquallButton(buttonValue: string) {
+	return buttonValue === '=';
 }
 
 function handleEquallButton(state: State): State {
@@ -177,20 +158,29 @@ function handleEquallButton(state: State): State {
 }
 
 //計算機能
-function operate(state: State): number {
+function formatResult(totalNum: number): string { //計算結果が、14桁以上になる場合、13桁まで表示し、以下切り捨ててEの文字を表示する
+	const totalNumStr = totalNum.toString();
+	if (totalNumStr.length >= 14) {
+		return totalNumStr.slice(0, 13) + 'E';
+	}
+	return totalNumStr;
+}
+
+function operate(state: State): number | string {
+	const operand = typeof state.operand === 'string' ? parseFloat(state.operand) : state.operand;
 	const current = parseFloat(state.current);
 
-	if(state.operator === '+') {
-		return state.operand + current;
+	if (state.operator === '+') {
+		return formatResult(operand + current);
 	}
-	if(state.operator === '-') {
-		return state.operand - current;
+	if (state.operator === '-') {
+		return formatResult(operand - current);
 	}
-	if(state.operator === 'x') {
-		return state.operand * current;
+	if (state.operator === 'x') {
+		return formatResult(operand * current);
 	}
-	if(state.operator === '/') {
-		return state.operand / current;
+	if (state.operator === '/') {
+		return formatResult(operand / current);
 	}
 	return current; //到達することはないが、一応+-x/以外の場合を記載
 }

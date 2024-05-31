@@ -55,12 +55,12 @@ function isNumButton(buttonValue: string): boolean { //押した数値ボタン�
 
 function clickNumButton(buttonValue: string, state: State): State {
 	// 現在の表示が（,を除く）14桁以上ならボタンを無視
-	if (state.current.replace(/,/g, '').length >= 14) {
+	if (state.current.replace(/,/g, '').length >= 13) {
 		return state;
 	}
 
 	const currentValue = (state.isNextClear === true || state.current === '0')
-		? buttonValue : (state.current.length < 13 ? state.current + buttonValue : state.current);
+		? buttonValue : (state.current.length < 12 ? state.current + buttonValue : state.current);
 	
 	return updateCurrent(currentValue, state, false);
 }
@@ -149,11 +149,11 @@ function clickEquallButton(state: State): State {
 }
 
 /*---------- 計算機能部分 ----------*/
-//計算結果が、14桁以上になる場合、13桁まで表示し、以下切り捨ててEの文字を表示する
+//計算結果が、13桁以上になる場合、12桁まで表示し、以下切り捨ててEの文字を表示する
 function formatResult(totalNum: number): string {
 	const totalNumStr = totalNum.toString();
-	if (totalNumStr.length >= 14) {
-		return totalNumStr.slice(0, 13) + 'E';
+	if (totalNumStr.length >= 13) {
+		return totalNumStr.slice(0, 12) + 'E';
 	}
 	return totalNumStr;
 }

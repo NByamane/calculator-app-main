@@ -1,14 +1,9 @@
 import { useState } from 'react';
 import { State, calculate } from '../logic/calculate';
-import { ThemeChange } from './ThemeChange';
 import { Display } from './Display';
 import { ButtonPanel } from './ButtonPanel';
 
-export interface CalculatorProps {
-  onThemeChange: (themeNum: number) => void;
-}
-
-export const Calculator = ({ onThemeChange }: CalculatorProps): JSX.Element => {
+export const Calculator = (): JSX.Element => {
 	//stateの設定
 	const [state, setState] = useState<State>({
 		current: '0', //表示内容
@@ -24,7 +19,6 @@ export const Calculator = ({ onThemeChange }: CalculatorProps): JSX.Element => {
 
 	return(
 		<div className="calculator">
-			<ThemeChange onThemeChange={onThemeChange} />
 			<Display value={state.current} />
 			<ButtonPanel buttonHandler={buttonHandler} />
 		</div>

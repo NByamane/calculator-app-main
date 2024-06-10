@@ -3,6 +3,7 @@
 	width: 100%;
 	margin: 0 auto;
 	padding: 0 10px 80px 10px;
+	background: #3B4664;
 }
 
 .calculator-theme-change {
@@ -10,7 +11,10 @@
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	align-items: center;
-	margin: 0 0 25px 0;
+	max-width: 470px;
+  width: 100%;
+	margin: 0 auto 25px;
+	padding: 0 10px;
 }
 
 .theme-change-btn-box {
@@ -60,6 +64,11 @@
 	height: 10px;
 	background: #D14031;
 	border-radius: 5px;
+	opacity: 0;
+}
+
+.btn-circle.active {
+	opacity: 1;
 }
 
 .calculator-result-box {
@@ -211,6 +220,124 @@
 	background: #902418;
 	border-radius: 10px;
 	z-index: -2;
+}
+
+/*----Theme2----*/
+.App.theme2 .calculator {
+	background: #E6E6E6;
+}
+
+.App.theme2 .calculator-result-box {
+	background: #EEEEEE;
+}
+
+.App.theme2 .calculator-name,
+.App.theme2 .theme-change-btn-box,
+.App.theme2 .calculator-result {
+	color: #33332D;
+}
+
+.App.theme2 .btn-circle {
+	background: #C85402;
+}
+
+.App.theme2 .theme-btn {
+	background: #D3CDCD;
+}
+
+.App.theme2 .calculator-body-box {
+	background: #D3CDCD;
+}
+
+.App.theme2 .num-btn {
+	color: #33332D;
+}
+
+.App.theme2 .num-btn::before {
+	background: #E5E4E1;
+}
+
+.App.theme2 .num-btn::after {
+	background: #A59D94;
+}
+
+.App.theme2 .num-btn.del::before,
+.App.theme2 .reset::before {
+	background: #368186;
+}
+
+.App.theme2 .num-btn.num-btn.del::after,
+.App.theme2 .reset::after {
+	background: #1B5A63;
+}
+
+.App.theme2 .equal::before {
+	background: #C85402;
+}
+
+.App.theme2 .equal::after {
+	background: #873902;
+}
+
+/*----Theme3----*/
+.App.theme3 .calculator {
+	background: #17062A;
+}
+
+.App.theme3 .calculator-result-box {
+	background: #1E0836;
+}
+
+.App.theme3 .calculator-name,
+.App.theme3 .theme-change-btn-box,
+.App.theme3 .calculator-result {
+	color: #FDE242;
+}
+
+.App.theme3 .btn-circle {
+	background: #00DCD4;
+}
+
+.App.theme3 .theme-btn {
+	background: #1E0836;
+}
+
+.App.theme3 .calculator-body-box {
+	background: #1E0836;
+}
+
+.App.theme3 .num-btn {
+	color: #FDE242;
+}
+
+.App.theme3 .num-btn::before {
+	background: #331B4D;
+}
+
+.App.theme3 .num-btn::after {
+	background: #821C98;
+}
+
+.App.theme3 .num-btn.del::before,
+.App.theme3 .reset::before {
+	background: #55087C;
+}
+
+.App.theme3 .num-btn.num-btn.del::after,
+.App.theme3 .reset::after {
+	background: #BF14F4;
+}
+
+.App.theme3 .equal {
+	color: #17062A;
+}
+
+.App.theme3 .equal::before {
+	background: #00DCD4;
+}
+
+.App.theme3 .equal::after {
+	background: #6EF9F0;
 }
 
 /*---470px以下---*/

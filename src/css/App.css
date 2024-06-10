@@ -24,6 +24,30 @@ h1 span {
   margin: 10px 0 0 0;
 }
 
-canvas {
-  display: none;
+/*----Theme2----*/
+
+.App.theme2 {
+  background: #E6E6E6;
+}
+
+.App.theme2 h1 {
+  color: #33332D;
+}
+
+.App.theme2 h1 span {
+  background: #EEEEEE;
+}
+
+/*----Theme3----*/
+
+.App.theme3 {
+  background: #17062A;
+}
+
+.App.theme3 h1 {
+  color: #FDE242;
+}
+
+.App.theme3 h1 span {
+  background: #1E0836;
 }

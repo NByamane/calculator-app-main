@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { State, calculate } from '../logic/calculate';
 import { Display } from './Display';
 import { ButtonPanel } from './ButtonPanel';
+import React from 'react';
 
-export const Calculator = (): JSX.Element => {
+export const Calculator = React.memo((): JSX.Element => {
 	//stateの設定
 	const [state, setState] = useState<State>({
 		current: '0', //表示内容
@@ -23,4 +24,4 @@ export const Calculator = (): JSX.Element => {
 			<ButtonPanel buttonHandler={buttonHandler} />
 		</div>
 	)
-}
+})

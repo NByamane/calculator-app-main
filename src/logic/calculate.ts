@@ -79,7 +79,7 @@ function clickOperationButton(buttonValue: string, state: State): State {
 	if(state.operator === null) { //operationボタン（+-x/）が押されていない場合（state値に変化がない場合）
 		return {
 			...state,
-			operand: parseFloat(state.current),
+			operand: Number(state.current),
 			operator: buttonValue,
 			isNextClear: true,
 		}
@@ -159,8 +159,8 @@ function formatResult(totalNum: number): string {
 }
 
 function operate(state: State): number | string {
-	const operand = typeof state.operand === 'string' ? parseFloat(state.operand) : state.operand;
-	const current = parseFloat(state.current);
+	const operand = typeof state.operand === 'string' ? Number(state.operand) : state.operand;
+	const current = Number(state.current);
 
 	if (state.operator === '+') {
 		return formatResult(operand + current);
